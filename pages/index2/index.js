@@ -28,7 +28,6 @@ var remoteData = [
 Page({
   data: {
     motto: 'Hello World',
-    userInfo: {},
     btn_color: config.data.btn_color,
     list: []
     
@@ -65,6 +64,7 @@ Page({
 
     var item_index = event.currentTarget.dataset.item_id;
     var data = this.data.list;
+    var userInfo = this.data.userInfo;
     var _this = this;
     wx.showActionSheet({
       itemList: config.data.coin_item_select,
@@ -73,17 +73,31 @@ Page({
           
           var index = res.tapIndex;
           
+          if (config.data.coin_item_select[index] > userInfo.coin_count){
+            wx.showToast({
+              title: '金币不足',
+              image:'../../images/error.png',
+              duration: 1000
+            });
+            return false;
+          }
+
+        //远程请求扣除金币
+        if(true){
+          userInfo.coin_count = userInfo.coin_count - config.data.coin_item_select[index];
+        }
+
+
+
           for (var i = 0; i < data[item_index].select_item.length; i++) {
             if (data[item_index].select_item[i].select == true){
               data[item_index].select_index = data[item_index].select_item[i].select_index;
               }
           }
           _this.setData({
-            list: data
+            list: data,
+            userInfo: userInfo
           })
-
-
-
 
           wx.showToast({
             title: '投注完成',
@@ -106,6 +120,8 @@ Page({
     //调用应用实例的方法获取全局数据
     app.getUserInfo(function (userInfo) {
       //更新数据
+      userInfo.coin_count = 1000;
+
       that.setData({
         userInfo: userInfo,
         list: remoteData

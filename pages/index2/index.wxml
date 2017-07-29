@@ -1,7 +1,8 @@
 <!--index.wxml-->
 <view class="container">
 
-
+  <view class="alert">我的金币:{{userInfo.coin_count}}</view>
+  
   <view class="block" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="item_key">
     <view class="title">{{list_item.title}}</view>
     <image class="weui-article__img" src="{{list_item.thumbnail}}"   />
@@ -13,7 +14,7 @@
         </view>
         <!--选择情况-->
         <view class="placeholder" wx:else>
-          <button wx:if="{{list_item.select_index==select_item.select_index}}" class="weui-btn" type="primary" >{{select_item.text}}</button>
+          <button wx:if="{{list_item.select_index==select_item.select_index}}" class="weui-btn" type="warn" >{{select_item.text}}</button>
           <button wx:else class="weui-btn"   type="primary" plain="true" disabled="true">{{select_item.text}}</button>
          </view>
       </view>
@@ -29,9 +30,7 @@
       </block>
 
     </view>
-    <view class="tab">
-          <view class="my_coin_count">我的金豆 100</view>
-    </view>
+ 
   </view>
 
 

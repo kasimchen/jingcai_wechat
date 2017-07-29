@@ -19,8 +19,12 @@
 .usermotto {
   margin-top: 200px;
 }
+.block{
+  margin-bottom: 20px;
+}
 .block image{
   height:180px;
+  margin-top: 10px;
 }
 .block .select_item{
   text-align: center;
@@ -48,4 +52,15 @@
   text-align: right;
   color:#aaa;
   float: right;
+}
+.alert{
+color:white;
+background-color:#2ec52d;
+height:30px;
+width:90%;
+text-align:center;
+font-size:13px;
+line-height:29px;
+margin-bottom: 20px;
+
 }
