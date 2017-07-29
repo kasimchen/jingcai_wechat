@@ -2,7 +2,7 @@
 //获取应用实例
 var app = getApp()
 
-var config = require('../../config/common.js')
+var config = require('../../config/common.js');
 
 var remoteData = [
   {
@@ -119,7 +119,18 @@ Page({
     var that = this
     //调用应用实例的方法获取全局数据
     app.getUserInfo(function (userInfo) {
-      //更新数据
+      
+      //wxlogin.login(userInfo);
+      
+      
+      //更新
+    
+      /*wx.request({
+        url: config.data.api_url,
+      })*/
+      
+
+
       userInfo.coin_count = 1000;
 
       that.setData({

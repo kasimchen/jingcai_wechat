@@ -9,7 +9,8 @@ var data = {
     "100",
     "200",
     "500",
-  ]
+  ],
+  "api_url":"http://www.cms.com"
 }
 
 

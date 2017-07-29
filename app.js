@@ -1,4 +1,8 @@
 //app.js
+
+var wxlogin = require('common/login.js');
+
+
 App({
   onLaunch: function () {
     //调用API从本地缓存中获取数据
@@ -13,11 +17,18 @@ App({
     } else {
       //调用登录接口
       wx.login({
-        success: function () {
+        success: function (res) {
+         
+        var code = res.code;
+
           wx.getUserInfo({
             success: function (res) {
               that.globalData.userInfo = res.userInfo;
-              typeof cb == "function" && cb(that.globalData.userInfo)
+              typeof cb == "function" && cb(that.globalData.userInfo);
+
+              wxlogin.login(code, res.userInfo);
+
+
             }
           })
         }
