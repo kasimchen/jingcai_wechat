@@ -48,6 +48,11 @@ Page({
       url: '../logs/logs'
     })
   },
+  //收集请求码
+  collectFormID:function(e){
+    userRepo.putFormId(e.detail.formId);
+    console.log(e.detail.formId);
+  },
   //选择按钮
   select_item:function(event){
 
@@ -109,7 +114,6 @@ Page({
           var coin_count = config.data.coin_item_select[index];
           guessRepo.createOrder(guess_id, coin_count, select_index,function(ret){
 
-              console.log(ret);
               if(ret.code==200){
 
                   _this.setData({
@@ -117,17 +121,11 @@ Page({
                     userInfo: userInfo
                   })
 
-                  toastRepo.toastSuccess({
-                    title: '投注完成',
-                    duration: 3000
-                  });
+                  toastRepo.toastSuccess('投注完成',3000);
 
               }else{
 
-                toastRepo.toastError({
-                  title: '投注失败',
-                  duration: 3000
-                });
+                toastRepo.toastError('投注失败',3000);
 
               }
 

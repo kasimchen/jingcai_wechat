@@ -10,7 +10,7 @@ var data = {
     "200",
     "500",
   ],
-  "api_url":"http://www.cms.com"
+  "api_url":"https://api.yuzhai.top"
 }
 
 
