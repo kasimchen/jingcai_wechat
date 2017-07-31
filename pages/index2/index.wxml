@@ -14,7 +14,7 @@
         </view>
         <!--选择情况-->
         <view class="placeholder" wx:else>
-          <button wx:if="{{list_item.select_index==select_item.select_index}}" class="weui-btn" type="warn" >{{select_item.text}}</button>
+          <button wx:if="{{list_item.select_index==select_item.select_index}}" class="weui-btn" type="{{list_item.select_index==1?'primary':'warn'}}" >{{select_item.text}}</button>
           <button wx:else class="weui-btn"   type="primary" plain="true" disabled="true">{{select_item.text}}</button>
          </view>
       </view>
