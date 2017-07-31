@@ -3,21 +3,31 @@
 var app = getApp()
 
 var config = require('../../config/common.js');
+var cache = require('../../common/cache.js');
+var userRepo = require('../../common/user.js');
+var guessRepo = require('../../common/guess.js');
+var toastRepo = require('../../common/toast.js');
+
+
+
 
 var remoteData = [
   {
+    "id":1,
     "title": "明天是否会天晴？",
     "thumbnail": "http://ubmcmm.baidustatic.com/media/v1/0f00075GZiA163784H9mV6.jpg",
     "select_item": [{ "text": "是", "select_index": 1, "select": false }, { "text": "否", "select_index": 2, "select": false }],
     "select_index": 0
   },
   {
+    "id": 2,
     "title": "我是标题2",
     "thumbnail": "http://ubmcmm.baidustatic.com/media/v1/0f00075GZiA163784H9mV6.jpg",
     "select_item": [{ "text": "是", "select_index": 1, "select": true }, { "text": "否", "select_index": 2, "select": false }],
     "select_index": 1
   },
   {
+    "id": 3,
     "title": "我是标题2",
     "thumbnail": "http://ubmcmm.baidustatic.com/media/v1/0f00075GZiA163784H9mV6.jpg",
     "select_item": [{ "text": "是", "select_index": 1, "select": false }, { "text": "否", "select_index": 2, "select": false }],
@@ -53,6 +63,7 @@ Page({
       }
     }
 
+
     this.setData({
       list:this.data.list
     })
@@ -63,6 +74,8 @@ Page({
   submit: function (event) {
 
     var item_index = event.currentTarget.dataset.item_id;
+    var guess_id = event.currentTarget.dataset.guess_id;
+
     var data = this.data.list;
     var userInfo = this.data.userInfo;
     var _this = this;
@@ -82,28 +95,45 @@ Page({
             return false;
           }
 
-        //远程请求扣除金币
-        if(true){
+          var  select_index = 0;
           userInfo.coin_count = userInfo.coin_count - config.data.coin_item_select[index];
-        }
-
-
 
           for (var i = 0; i < data[item_index].select_item.length; i++) {
             if (data[item_index].select_item[i].select == true){
+              select_index = data[item_index].select_item[i].select_index;
               data[item_index].select_index = data[item_index].select_item[i].select_index;
               }
           }
-          _this.setData({
-            list: data,
-            userInfo: userInfo
-          })
 
-          wx.showToast({
-            title: '投注完成',
-            icon: 'success',
-            duration: 3000
+          //远程请求扣除金币
+          var coin_count = config.data.coin_item_select[index];
+          guessRepo.createOrder(guess_id, coin_count, select_index,function(ret){
+
+              console.log(ret);
+              if(ret.code==200){
+
+                  _this.setData({
+                    list: data,
+                    userInfo: userInfo
+                  })
+
+                  toastRepo.toastSuccess({
+                    title: '投注完成',
+                    duration: 3000
+                  });
+
+              }else{
+
+                toastRepo.toastError({
+                  title: '投注失败',
+                  duration: 3000
+                });
+
+              }
+
           });
+
+    
 
 
         }
@@ -114,29 +144,26 @@ Page({
   },
 
   onLoad: function () {
-
     console.log('onLoad')
     var that = this
     //调用应用实例的方法获取全局数据
-    app.getUserInfo(function (userInfo) {
-      
-      //wxlogin.login(userInfo);
-      
-      
-      //更新
-    
-      /*wx.request({
-        url: config.data.api_url,
-      })*/
-      
 
+    remoteData = guessRepo.getGuessList(function(ret){
 
-      userInfo.coin_count = 1000;
+     var  userInfo = cache.getUserInfo();
+     that.setData({
+       userInfo: userInfo,
+       list: ret
+     })
 
-      that.setData({
-        userInfo: userInfo,
-        list: remoteData
-      })
     })
+
+  
+
+    //加载列表
+
+
+
+
   }
 })

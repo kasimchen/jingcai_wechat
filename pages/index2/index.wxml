@@ -23,7 +23,7 @@
         <block wx:if="{{select_item.select==true&&list_item.select_index==0}}">
           <view class="weui-flex__item select_item">
             <view class="placeholder">
-              <button class="weui-btn" type="warn" bindtap="submit" data-item_id="{{item_key}}" data-select_id="{{list_item.select_index}}" >投注</button>
+              <button class="weui-btn" type="warn" bindtap="submit" data-guess_id="{{list_item.id}}" data-item_id="{{item_key}}" data-select_id="{{list_item.select_index}}" >投注</button>
             </view>
           </view>
         </block>

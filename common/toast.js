@@ -1,16 +1,23 @@
-function toastSuccess(msg){
+function toastSuccess(msg, duration){
+
+  var duration = duration ? duration:3000;
+
   wx.showToast({
     title: msg,
     icon: 'success',
-    duration: 3000
+    duration: duration
   });
 }
 
-function toastError(msg) {
+function toastError(msg, duration) {
+  
+  var duration = duration ? duration : 3000;
+
+
   wx.showToast({
     title: msg,
     image: '../images/error.png',
-    duration: 3000
+    duration: duration
   });
 }
 
