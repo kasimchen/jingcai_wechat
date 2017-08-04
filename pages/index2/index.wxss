@@ -21,6 +21,7 @@
 }
 .block{
   margin-bottom: 20px;
+  margin:15px;
 }
 .block image{
   height:180px;

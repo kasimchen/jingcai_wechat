@@ -5,7 +5,7 @@
   
   <view class="block" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="item_key">
     <view class="title">{{list_item.title}}</view>
-    <image class="weui-article__img" src="{{list_item.thumbnail}}"   />
+    <image class="weui-article__img" src="{{list_item.thumbnail}}" mode="widthFix" />
     <view class="weui-flex">
       <view class="weui-flex__item select_item" wx:for="{{list_item.select_item}}" wx:for-item="select_item" wx:for-index="select_key">
         <!--没有选择情况-->
